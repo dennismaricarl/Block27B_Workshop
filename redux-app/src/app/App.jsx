@@ -1,5 +1,5 @@
-import TransactionHistory from "../features/transactions/TransactionHistory";
-import Transactions from "../features/transactions/Transactions";
+import TransactionHistory from "../Transactions/TransactionHistory";
+import Transactions from "../Transactions/Transactions";
 
 import "./app.css";
 
