@@ -28,7 +28,7 @@ Refer to the "withdrawal" reducer, which is already implemented for you.
 
 const transactionsSlice = createSlice({
   name: "transactions",
-  initialState: 0,
+  initialState,
   reducers: {
     //withdrawal reducer 
     withdrawal: (state, { payload }) => {

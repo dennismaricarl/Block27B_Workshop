@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from 'react-redux'; 
 
 import "./transactions.scss";
 
@@ -7,13 +9,14 @@ import "./transactions.scss";
  */
 export default function Transactions() {
   // TODO: Get the balance from the Redux store using the useSelector hook
-  const balance = 0;
-
+  
+  const balance = useSelector(state =>state.balance)
   const [amountStr, setAmountStr] = useState("0.00");
 
   /** Dispatches a transaction action based on the form submission. */
   const onTransaction = (e) => {
     e.preventDefault();
+  
 
     // This changes depending on which button the user clicked to submit the form.
     // It will be either "deposit", "withdraw", or "transfer".
@@ -22,6 +25,7 @@ export default function Transactions() {
     const amount = +amountStr;
 
     // TODO: Dispatch the appropriate transaction action based on `action`
+    const dispatch = useDispatch();
   };
 
   return (
@@ -45,10 +49,10 @@ export default function Transactions() {
             />
           </label>
           <div>
-            <button default name="deposit">
+            <button onClick={()=> dispatch(deposit()) } default name="deposit">
               Deposit
             </button>
-            <button name="withdraw">Withdraw</button>
+            <button onClick={() => dispatch(withdraw())} name="withdraw">Withdraw</button>
           </div>
         </div>
         <div className="form-row">
@@ -56,7 +60,7 @@ export default function Transactions() {
             Transfer to
             <input type="text" placeholder="Recipient Name" name="recipient" />
           </label>
-          <button name="transfer">Transfer</button>
+          <button onClick={()=> dispatch(transfer())} name="transfer">Transfer</button>
         </div>
       </form>
     </section>
