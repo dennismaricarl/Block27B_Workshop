@@ -1,16 +1,20 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux'; 
+import { selectBalance } from "./transactionsSlice";
+import { deposit, withdrawal, transfer } from "./transactionsSlice"
 
 import "./transactions.scss";
+
 
 /**
  * Allows users to deposit to, withdraw from, and transfer money from their account.
  */
 export default function Transactions() {
   // TODO: Get the balance from the Redux store using the useSelector hook
-  
-  const balance = useSelector(state =>state.balance)
+  const dispatch = useDispatch();
+  const balance = useSelector(selectBalance)
+  //export const selectBalance = (state) => state.transactions.balance;
   const [amountStr, setAmountStr] = useState("0.00");
 
   /** Dispatches a transaction action based on the form submission. */
@@ -21,12 +25,19 @@ export default function Transactions() {
     // This changes depending on which button the user clicked to submit the form.
     // It will be either "deposit", "withdraw", or "transfer".
     const action = e.nativeEvent.submitter.name;
-
     const amount = +amountStr;
+    const recipient = e.target.recipient.value;
 
-    // TODO: Dispatch the appropriate transaction action based on `action`
-    const dispatch = useDispatch();
-  };
+  // TODO: Dispatch the appropriate transaction action based on `action`
+  // switch case here
+
+    if (action === "deposit") {
+      dispatch(deposit(amount));
+    } else if (action === "withdraw") {
+      dispatch(withdrawal(amount));
+    } else if (action === "transfer") {
+      dispatch(transfer(amount, recipient));
+    }
 
   return (
     <section className="transactions container">
@@ -49,10 +60,10 @@ export default function Transactions() {
             />
           </label>
           <div>
-            <button onClick={()=> dispatch(deposit()) } default name="deposit">
+            <button default name="deposit">
               Deposit
             </button>
-            <button onClick={() => dispatch(withdraw())} name="withdraw">Withdraw</button>
+            <button  name="withdraw">Withdraw</button>
           </div>
         </div>
         <div className="form-row">
@@ -60,9 +71,10 @@ export default function Transactions() {
             Transfer to
             <input type="text" placeholder="Recipient Name" name="recipient" />
           </label>
-          <button onClick={()=> dispatch(transfer())} name="transfer">Transfer</button>
+          <button name="transfer">Transfer</button>
         </div>
       </form>
     </section>
   );
+}
 }

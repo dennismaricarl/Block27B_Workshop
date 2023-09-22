@@ -1,6 +1,6 @@
 import TransactionHistory from "../Transactions/TransactionHistory";
 import Transactions from "../Transactions/Transactions";
-import store from './redux/store';
+import { store } from '../app/store.js'
 import {Provider} from 'react-redux'
 import "./app.css";
 
