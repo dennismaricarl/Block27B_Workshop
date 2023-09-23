@@ -38,6 +38,8 @@ const transactionsSlice = createSlice({
         type: "withdrawal",
         amount: payload.amount,
         balance: state.balance,
+      })
+    },
 
     //deposit reducer to increase balance by the amount in the payload 
     deposit: (state, {payload}) => {
@@ -53,17 +55,15 @@ const transactionsSlice = createSlice({
     transfer: (state, {payload}) => {
       state.balance -= payload.amount;
       state.history.push({
-        type: `transfer/${payload.name}`,
+        type: "transfer",
         amount: payload.amount,
         balance: state.balance
       });
 
     }
+  }
 
       });
-    },
-  },
-});
 
 export const { deposit, withdrawal, transfer } = transactionsSlice.actions;
 

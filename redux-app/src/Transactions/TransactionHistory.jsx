@@ -2,6 +2,7 @@ import "./transactionHistory.scss";
 import { useSelector } from "react-redux"
 import { selectHistory } from "./transactionsSlice";
 
+
 /** Displays a table row with transaction information  */
 const TransactionRow = ({ transaction: { type, amount, balance } }) => (
   <tr>
@@ -35,7 +36,7 @@ export default function TransactionHistory() {
           {/* Map over the transactions in `history` to render the appropriate `TransactionRow`s */}
           {history.map((transaction)=> {
             return (
-              <TransactionRow key={transaction.type} type={transaction.type} amount={transaction.amount} balance={transaction.balance} />
+              <TransactionRow key={transaction.type} transaction={transaction} />
             );
           }) }
           

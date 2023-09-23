@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from 'react-redux'; 
-import { selectBalance } from "./transactionsSlice";
-import { deposit, withdrawal, transfer } from "./transactionsSlice"
-
+import { useSelector, useDispatch } from "react-redux";
+import { deposit, withdrawal, transfer } from './transactionsSlice'
 import "./transactions.scss";
+
 
 
 /**
@@ -13,7 +11,7 @@ import "./transactions.scss";
 export default function Transactions() {
   // TODO: Get the balance from the Redux store using the useSelector hook
   const dispatch = useDispatch();
-  const balance = useSelector(selectBalance)
+  const balance = useSelector((state) => state.transactions.balance)
   //export const selectBalance = (state) => state.transactions.balance;
   const [amountStr, setAmountStr] = useState("0.00");
 
@@ -26,19 +24,21 @@ export default function Transactions() {
     // It will be either "deposit", "withdraw", or "transfer".
     const action = e.nativeEvent.submitter.name;
     const amount = +amountStr;
-    const recipient = e.target.recipient.value;
+  
 
   // TODO: Dispatch the appropriate transaction action based on `action`
   // switch case here
 
     if (action === "deposit") {
-      dispatch(deposit(amount));
+      dispatch(deposit({amount}));
     } else if (action === "withdraw") {
-      dispatch(withdrawal(amount));
+      dispatch(withdrawal({amount}));
     } else if (action === "transfer") {
-      dispatch(transfer(amount, recipient));
+      const recipient = e.target.recipient.value;
+      dispatch(transfer({amount, recipient}));
     }
-
+  };
+  
   return (
     <section className="transactions container">
       <h2>Transactions</h2>
@@ -76,5 +76,4 @@ export default function Transactions() {
       </form>
     </section>
   );
-}
 }
